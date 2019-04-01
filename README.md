@@ -14,7 +14,7 @@
 
 > Beam Anki decks right into your brain!
 
-MemoBeam is an add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.net/). I allows users to directly transmit flashcards into their brain. Don't believe me? [Here's the science behind it](https://raw.githubusercontent.com/glutanimate/memobeam/master/screenshots/science.png)!
+MemoBeam is an add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.net/) that allows users to directly transmit flashcards into their brain. Don't believe me? [Here's the science behind it](https://github.com/glutanimate/memobeam/blob/master/screenshots/science.png)!
 
 
 ### Table of Contents <!-- omit in toc -->
