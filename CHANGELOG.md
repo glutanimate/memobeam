@@ -12,11 +12,16 @@ If you enjoy MemoBeam, please consider supporting my work on Patreon, or by buyi
 
 ## [Unreleased]
 
+## [0.1.0] - 2019-04-01
+
+### [Download](https://github.com/glutanimate/memobeam/releases/tag/v0.1.0)
+
 ### Added
 
 - Initial release of MemoBeam
 
-[Unreleased]: https://github.com/glutanimate/memobeam/compare/v0.1.0-dev.1...HEAD
+[Unreleased]: https://github.com/glutanimate/memobeam/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/glutanimate/memobeam/compare/v0.1.0-dev.1...v0.1.0
 
 -----
 
