@@ -1,6 +1,6 @@
 <p align="center"><img src="resources/icons/logo.png"></p>
 
-<h2 align="center">MemoBeam for Anki</h2>
+<h2 align="center">MemoBeam for Anki (April Fools 2019)</h2>
 
 <p align="center">
 <a title="Latest (pre-)release" href="https://github.com/glutanimate/memobeam/releases"><img src ="https://img.shields.io/github/release-pre/glutanimate/memobeam.svg?colorB=brightgreen"></a>
