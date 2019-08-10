@@ -2,7 +2,7 @@
 
 # Libaddon for Anki
 #
-# Copyright (C) 2018-2019  Glutanimate <https//glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -37,7 +37,8 @@ from ..packaging import VersionSpecificImporter
 
 # New vendored packages should be appended here:
 names = [
-    "packaging"
+    "packaging",
+    "markdown2"
 ]
 
 # NOTE: VersionSpecificImporter does not resolve absolute imports within

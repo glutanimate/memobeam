@@ -2,7 +2,7 @@
 
 # Libaddon for Anki
 #
-# Copyright (C) 2018-2019  Glutanimate <https//glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -193,7 +193,7 @@ class MappedDialog(BasicDialog):
             return []
         crumbs = path.split("/")
         return [c if not c.strip("-").isdigit() else
-                int(c.strip("-")) * (0 - c.startswith("-"))
+                int(c.strip("-")) * (-1 if c.startswith("-") else 1)
                 for c in crumbs]
 
     def _dataToWidgetVal(self, data, property_dict):

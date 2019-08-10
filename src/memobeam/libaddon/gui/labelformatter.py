@@ -2,7 +2,7 @@
 
 # Libaddon for Anki
 #
-# Copyright (C) 2018-2019  Glutanimate <https//glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -38,12 +38,12 @@ from __future__ import (absolute_import, division,
 
 from aqt.qt import *
 
-from ..consts import ADDON_NAME, ADDON_VERSION
+from ..consts import ADDON
 from ..platform import ANKI20
 
 format_dict = {
-    "ADDON_NAME": ADDON_NAME,
-    "ADDON_VERSION": ADDON_VERSION,
+    "ADDON_NAME": ADDON.NAME,
+    "ADDON_VERSION": ADDON.VERSION,
 }
 
 if not ANKI20:
