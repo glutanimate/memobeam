@@ -33,9 +33,6 @@
 Initializes add-on components.
 """
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
 import datetime
 
 from aqt import mw
@@ -43,7 +40,10 @@ from aqt.utils import tooltip
 
 from .gui.wizard import BeamWizard
 
-def beamIt(did):
+
+def beam_it(did: int):
+    if not mw:
+        return
     name = mw.col.decks.nameOrNone(did)
     if name is None:
         return

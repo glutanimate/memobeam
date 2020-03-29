@@ -33,17 +33,17 @@
 MemoBeam wizard dialog
 """
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
-import time
 import random
+import time
 
-from aqt.qt import *
+from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtGui import QMovie
+from PyQt5.QtWidgets import QLabel, QWizard, QWidget
+
 from aqt.utils import askUser
 
-from .forms import wizard as qtform_wizard
 from .contrib import invokeContributionsDialog
+from .forms import wizard as qtform_wizard
 
 memories = (
     "That <b>cringy moment</b> in school that you always think about before going to sleep",
@@ -52,7 +52,7 @@ memories = (
     "That <b>dreadful movie</b> you saw last year",
     "The <b>terrible last season</b> of that TV show",
     "That time you did that <b>embarassing thing</b> in public",
-    "Intricate knowledge of <b>3 mobile games</b> you never intend to play again"
+    "Intricate knowledge of <b>3 mobile games</b> you never intend to play again",
 )
 
 
@@ -60,6 +60,7 @@ class ProgressThread(QThread):
     """
     Runs a counter thread.
     """
+
     countChanged = pyqtSignal(int)
     countDone = pyqtSignal()
     countInterrupt = pyqtSignal()
@@ -85,22 +86,21 @@ class ProgressThread(QThread):
                 continue
             count = round(count, 2)
             time.sleep(step)
-            self.countChanged.emit(count*10)
+            self.countChanged.emit(count * 10)
         self.countDone.emit()
-    
+
     def stop(self):
         self._is_running = False
-    
+
     def pause(self):
         self._is_paused = True
-    
+
     def unpause(self):
         self._is_paused = False
 
 
 class BeamWizard(QWizard):
-
-    def __init__(self, deck, cards, year, parent=None):
+    def __init__(self, deck: str, cards: int, year: int, parent: QWidget = None):
         super(BeamWizard, self).__init__(parent=parent)
         self.deck = deck
         self.cards = cards
@@ -111,22 +111,17 @@ class BeamWizard(QWizard):
         self.form.setupUi(self)
         self.setOption(QWizard.NoBackButtonOnLastPage, True)
         self._setupUI()
-    
+
     def _setupUI(self):
         self.movie = QMovie(":/memobeam/icons/transfer.gif")
         self.formatLabel(self.form.labelYear)
         self.formatLabel(self.form.labelDeck)
         self.formatLabel(self.form.labelDone)
         self.form.labelTransfer.setMovie(self.movie)
-        self.form.btnContrib.clicked.connect(
-            lambda: invokeContributionsDialog(self))
-    
-    def formatLabel(self, label):
-        fdict = {
-            "NextYear": self.year + 1,
-            "Cards": self.cards,
-            "Deck": self.deck
-        }
+        self.form.btnContrib.clicked.connect(lambda: invokeContributionsDialog(self))
+
+    def formatLabel(self, label: QLabel):
+        fdict = {"NextYear": self.year + 1, "Cards": self.cards, "Deck": self.deck}
         text = label.text().format(**fdict)
         label.setText(text)
 
@@ -139,8 +134,8 @@ class BeamWizard(QWizard):
         self.pThread.countInterrupt.connect(self.onBeamInterrupted)
         self.pThread.start()
         self.form.labelProgress.setText("Beaming flashcards into memory...")
-    
-    def onCountChanged(self, val):
+
+    def onCountChanged(self, val: int):
         self.form.progressBar.setValue(val)
 
     def onBeamDone(self):
@@ -149,7 +144,7 @@ class BeamWizard(QWizard):
         self.movie.stop()
         self.currentPage().completeChanged.emit()
         self.next()
-    
+
     def onBeamInterrupted(self):
         self.movie.stop()
         memsamples = random.sample(memories, 3)
@@ -162,23 +157,26 @@ to make some more room:
 {}
 </ul>
 Would you be OK with <b>deleting</b> these memories?
-""".format("\n".join("<li>{}</li>".format(i) for i in memsamples))
-        
+""".format(
+            "\n".join("<li>{}</li>".format(i) for i in memsamples)
+        )
+
         a = askUser(q, parent=self, title="MemoBeam")
         if not a:
             self.back()
             return
         self.movie.start()
         self.form.labelProgress.setText(
-            "Deleting unneeded memories and continuing with beaming...")
+            "Deleting unneeded memories and continuing with beaming..."
+        )
         self.pThread.unpause()
 
-    def initializePage(self, pid):
+    def initializePage(self, pid: int):
         super(BeamWizard, self).initializePage(pid)
         if pid == 3:
             self.onBeamInProgress()
         pass
-    
+
     def cleanup(self):
         if self.pThread:
             self.pThread.stop()

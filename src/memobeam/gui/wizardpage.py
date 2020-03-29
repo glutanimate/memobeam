@@ -33,7 +33,7 @@
 Custom QWizardPage widget
 """
 
-from aqt.qt import *
+from PyQt5.QtWidgets import QWizardPage
 
 class BeamPage(QWizardPage):
 

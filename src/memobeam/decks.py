@@ -33,47 +33,25 @@
 Initializes add-on components.
 """
 
-
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
-
-from aqt.qt import *
-from aqt.deckbrowser import DeckBrowser
+from PyQt5.QtWidgets import QMenu
 
 from anki.hooks import addHook
 
-from .libaddon.platform import ANKI20
-from .beam import beamIt
+from .beam import beam_it
 
-def onShowOptions20(self, did):
-    m = QMenu(self.mw)
-    a = m.addAction(_("Rename"))
-    a.connect(a, SIGNAL("triggered()"), lambda did=did: self._rename(did))
-    a = m.addAction(_("Options"))
-    a.connect(a, SIGNAL("triggered()"), lambda did=did: self._options(did))
-    a = m.addAction(_("Export"))
-    a.connect(a, SIGNAL("triggered()"), lambda did=did: self._export(did))
-    a = m.addAction(_("Delete"))
-    a.connect(a, SIGNAL("triggered()"), lambda did=did: self._delete(did))
-    # MOD START
-    a = m.addAction("Beam it!")
-    font = a.font()
+
+def on_deck_options(menu: QMenu, did: int):
+    action = menu.addAction("Beam it!")
+    action.triggered.connect(lambda b, did=did: beam_it(did))  # type: ignore
+    font = action.font()
     font.setBold(True)
-    a.connect(a, SIGNAL("triggered()"), lambda did=did: beamIt(did))
-    # MOD END
-    m.exec_(QCursor.pos())
+    action.setFont(font)
 
-def onDeckOptions(menu, did):
-    a = menu.addAction("Beam it!")
-    a.triggered.connect(lambda b, did=did: beamIt(did))
-    font = a.font()
-    font.setBold(True)
-    a.setFont(font)
 
-def initDeckBrowser():
-    if ANKI20:
-        # finicky, will break if other add-on tries the same:
-        DeckBrowser._showOptions = onShowOptions20
-    else:
-        addHook("showDeckOptions", onDeckOptions)
+def initialize_deck_browser():
+    try:  # 2.1.20+
+        from aqt.gui_hooks import deck_browser_will_show_options_menu
+
+        deck_browser_will_show_options_menu.append(on_deck_options)
+    except (ImportError, ModuleNotFoundError):
+        addHook("showDeckOptions", on_deck_options)
