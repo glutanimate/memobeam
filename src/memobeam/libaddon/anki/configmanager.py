@@ -45,10 +45,10 @@ from anki.hooks import addHook, runHook
 from .._vendor.packaging import version
 
 from ..utils import deepMergeDicts
-from ..platform import ANKI20, PATH_ADDON, MODULE_ADDON
+from ..platform import ANKI20, PATH_THIS_ADDON, MODULE_ADDON
 
-DEFAULT_LOCAL_CONFIG_PATH = os.path.join(PATH_ADDON, "config.json")
-DEFAULT_LOCAL_META_PATH = os.path.join(PATH_ADDON, "meta.json")
+DEFAULT_LOCAL_CONFIG_PATH = os.path.join(PATH_THIS_ADDON, "config.json")
+DEFAULT_LOCAL_META_PATH = os.path.join(PATH_THIS_ADDON, "meta.json")
 
 
 class ConfigError(Exception):
@@ -183,6 +183,33 @@ class ConfigManager(object):
         Returns printable representation of all config storage values.
         """
         return self._config.__str__()
+
+    # Attribute interface
+    ######################################################################
+    
+    @property
+    def local(self):
+        return self.__getitem__("local")
+    
+    @local.setter
+    def local(self, value):
+        return self.__setitem__("local", value)
+    
+    @property
+    def synced(self):
+        return self.__getitem__("synced")
+
+    @synced.setter
+    def synced(self, value):
+        return self.__setitem__("synced", value)
+    
+    @property
+    def profile(self):
+        return self.__getitem__("profile")
+
+    @profile.setter
+    def profile(self, value):
+        return self.__setitem__("profile", value)
 
     # Regular interface
     ######################################################################
@@ -351,13 +378,20 @@ class ConfigManager(object):
             action {function} -- Function to call
         """
         self.conf_action = action
-        if not ANKI20:
+        if not ANKI20 and action:
             self.mw.addonManager.setConfigAction(
                 MODULE_ADDON, action)
 
     def setConfigUpdatedAction(self, action):
+        """
+        Set function/method to call after config dialog is
+        closed in Anki 2.1's add-on manager.
+
+        Arguments:
+            action {function} -- Function to call
+        """
         self.conf_updated_action = action
-        if not ANKI20:
+        if not ANKI20 and action:
             self.mw.addonManager.setConfigUpdatedAction(
                 MODULE_ADDON, action)
 
@@ -410,6 +444,10 @@ class ConfigManager(object):
     def _setupAnkiHooks(self, conf_action):
         if "local" in self._storages:
             self.setConfigUpdatedAction(self.onLocalConfigUpdated)
+            # TODO: setConfigAction to save local config before invoking
+            # Anki's native config editor. Currently not feasible with
+            # the existing config action implementation. NOTE: Make sure
+            # to save local config when updating outside of config editor
         self.setConfigAction(conf_action)
         if ANKI20:
             self._setupAddonMenus20()
@@ -420,11 +458,11 @@ class ConfigManager(object):
         from ..gui.dialog_configeditor import ConfigEditor
         
         from ..consts import ADDON
-        from ..platform import DIRECTORY_ADDONS
+        from ..platform import PATH_ADDONS
         
         def onEdit(mgr, file_path, _old):
             entry_point = os.path.join(
-                DIRECTORY_ADDONS, ADDON.NAME + ".py")
+                PATH_ADDONS, ADDON.NAME + ".py")
             if not file_path == entry_point:
                 return _old(mgr, file_path)
             if self.conf_action:
@@ -470,7 +508,9 @@ class ConfigManager(object):
             dict -- Dictionary of default config values
         """
         if not ANKI20:
-            return self.mw.addonManager.addonConfigDefaults(MODULE_ADDON)
+            defaults = self.mw.addonManager.addonConfigDefaults(MODULE_ADDON)
+            if defaults is None:
+                raise ConfigError("Default config.json file could not be found")
         else:
             return self._addonConfigDefaults20()
 
