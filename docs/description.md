@@ -8,9 +8,12 @@ MemoBeam modulates electromagnetic signals in your monitor to produce <b>Ebbingh
 
 Say no to repetitive thumb injury, late-night cramming sessions, mountain-high backlogs, and try out out MemoBeam today. It's free, fast, and **[scientifically proven](https://raw.githubusercontent.com/glutanimate/memobeam/master/screenshots/science.png)** to work!
 
+
 **USAGE**
 
 From Anki's main screen, find the deck you want to study, click on the gear icon, select _Beam it!_, and let MemoBeam do its magic!
+
+<!-- CHANGELOG -->
 
 **CREDITS AND LICENSE**
 
