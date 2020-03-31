@@ -12,6 +12,10 @@ If you enjoy MemoBeam, please consider supporting my work on Patreon, or by buyi
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-03-31
+
+### [Download](https://github.com/glutanimate/memobeam/releases/tag/v0.2.0)
+
 ## Changed
 
 - Improved useless fact detection – more capacity for your memobeams!
@@ -25,7 +29,8 @@ If you enjoy MemoBeam, please consider supporting my work on Patreon, or by buyi
 
 - Initial release of MemoBeam
 
-[Unreleased]: https://github.com/glutanimate/memobeam/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/glutanimate/memobeam/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/glutanimate/memobeam/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/glutanimate/memobeam/compare/v0.1.0-dev.1...v0.1.0
 
 -----
