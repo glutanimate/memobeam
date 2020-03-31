@@ -53,6 +53,11 @@ memories = (
     "The <b>terrible last season</b> of that TV show",
     "That time you did that <b>embarassing thing</b> in public",
     "Intricate knowledge of <b>3 mobile games</b> you never intend to play again",
+    "<b>1254 low-yield flashcards</b> that you created from class lectures",
+    "<b>23 YouTube tutorials</b> that you'll never need again",
+    "That <b>TV series</b> that you'd <b>love to watch again</b> without knowing anything about it",
+    "That <b>awful season finale</b> of your favorite show",
+    "34 <b>cat facts</b>",
 )
 
 
