@@ -12,6 +12,11 @@ If you enjoy MemoBeam, please consider supporting my work on Patreon, or by buyi
 
 ## [Unreleased]
 
+## Changed
+
+- Improved useless fact detection – more capacity for your memobeams!
+- Added support for the latest Anki add-on API changes. This should make sure that you'll be able to memobeam your way through your reviews for years to come!
+
 ## [0.1.0] - 2019-04-01
 
 ### [Download](https://github.com/glutanimate/memobeam/releases/tag/v0.1.0)
